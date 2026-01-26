@@ -1,28 +1,40 @@
 // Em DEV: backend local. Em produção troque pela URL do Render.
-const API_BASE_URL = "https://portifolio-backend-t5w2.onrender.com";
+const API_BASE_URL = "http://localhost:5000";
 // ex. produção: const API_BASE_URL = "https://seu-backend.onrender.com";
 
 document.addEventListener("DOMContentLoaded", () => {
+  // Inicializa os ícones do Lucide
   lucide.createIcons();
 
-  // YEAR
-  document.getElementById("current-year").textContent =
-    new Date().getFullYear();
+  /* 
+    ========================================
+    1. GENERAL UI UPDATES
+    ========================================
+  */
+  
+  // Update Current Year in Footer
+  document.getElementById("current-year").textContent = new Date().getFullYear();
 
-  // PROFILE
+  /* 
+    ========================================
+    2. PROFILE DATA INJECTION
+    ========================================
+  */
   document.getElementById("profile-name").textContent = profile.name;
-  document.getElementById(
-    "profile-tagline"
-  ).textContent = `${profile.role}. ${profile.tagline}`;
-  document.getElementById("profile-description").textContent =
-    profile.description;
+  document.getElementById("profile-tagline").textContent = `${profile.role}. ${profile.tagline}`;
+  document.getElementById("profile-description").textContent = profile.description;
 
+  // Social Links
   document.getElementById("github").href = profile.social.github;
   document.getElementById("linkedin").href = profile.social.linkedin;
   document.getElementById("mail").href = profile.social.email;
   document.getElementById("instagram").href = profile.social.instagram;
 
-  // SKILLS
+  /* 
+    ========================================
+    3. SKILLS RENDERING
+    ========================================
+  */
   function renderSkills() {
     const container = document.getElementById("skills-container");
 
@@ -48,12 +60,16 @@ document.addEventListener("DOMContentLoaded", () => {
       )
       .join("");
 
-    lucide.createIcons();
+    lucide.createIcons(); // Re-render icons for new content
   }
 
   renderSkills();
 
-  // PROJECTS
+  /* 
+    ========================================
+    4. PROJECTS RENDERING
+    ========================================
+  */
   function renderProjects() {
     const container = document.getElementById("projects-container");
 
@@ -86,17 +102,23 @@ document.addEventListener("DOMContentLoaded", () => {
       )
       .join("");
 
-    lucide.createIcons();
+    lucide.createIcons(); // Re-render icons for new content
   }
 
   renderProjects();
 
-  // MOBILE MENU
+  /* 
+    ========================================
+    5. MOBILE MENU BEHAVIOR
+    ========================================
+  */
   const mobileMenuBtn = document.getElementById("mobile-menu-btn");
   const mobileMenu = document.getElementById("mobile-menu");
 
   mobileMenuBtn.addEventListener("click", () => {
     mobileMenu.classList.toggle("hidden");
+    
+    // Toggle icon between 'menu' and 'x'
     mobileMenuBtn.innerHTML = mobileMenu.classList.contains("hidden")
       ? '<i data-lucide="menu"></i>'
       : '<i data-lucide="x"></i>';
@@ -104,7 +126,11 @@ document.addEventListener("DOMContentLoaded", () => {
     lucide.createIcons();
   });
 
-  // FORM CONTATO + BACKEND
+  /* 
+    ========================================
+    6. CONTACT FORM & BACKEND INTEGRATION
+    ========================================
+  */
   const form = document.getElementById("contact-form");
   const success = document.getElementById("success-message");
   const submitBtn = document.getElementById("submit-btn");
@@ -116,6 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const email = document.getElementById("email").value;
     const message = document.getElementById("message").value;
 
+    // Disable button and show loading state
     submitBtn.disabled = true;
     submitBtn.innerHTML = '<i data-lucide="loader"></i> Enviando...';
     lucide.createIcons();
@@ -134,36 +161,22 @@ document.addEventListener("DOMContentLoaded", () => {
       if (response.ok) {
         success.classList.remove("hidden");
         form.reset();
+        
         console.log("Mensagem salva:", data);
+        
+        // Hide success message after 3 seconds
         setTimeout(() => success.classList.add("hidden"), 3000);
       } else {
         alert(data.error || "Erro ao enviar mensagem.");
       }
     } catch (error) {
       console.error("Erro:", error);
-      alert("Erro de conexão com o servidor.");
+      alert("Erro de conexão com o servidor. Verifique se o backend está rodando.");
     } finally {
+      // Restore button state
       submitBtn.disabled = false;
       submitBtn.innerHTML = '<i data-lucide="send"></i> Enviar Mensagem';
       lucide.createIcons();
     }
   });
-
-  // VIEW COUNTER
-  // function updateViewCounter() {
-  //   const namespace = "d-shebarro-portfolio";
-  //   const key = "site-views";
-  //   const counterElement = document.getElementById("view-counter");
-
-  //   fetch(`https://api.simplecounter.co/v1/hit/${namespace}/${key}`)
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       counterElement.textContent = data.value;
-  //     })
-  //     .catch(() => {
-  //       counterElement.textContent = "N/A";
-  //     });
-  // }
-
-  // updateViewCounter();
 });

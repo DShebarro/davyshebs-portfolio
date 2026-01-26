@@ -1,3 +1,11 @@
+/* 
+  ========================================
+  STATIC DATA DATABASE
+  ========================================
+  This file acts as a local data source for the portfolio.
+  It contains objects for Profile, Skills, and Projects.
+*/
+
 const profile = {
   name: "Davy Shebarro",
   role: "Desenvolvedor Front-End",
