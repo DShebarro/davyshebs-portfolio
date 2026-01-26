@@ -39,6 +39,18 @@ db.run(`CREATE TABLE IF NOT EXISTS messages (
     date DATETIME DEFAULT CURRENT_TIMESTAMP
 )`);
 
+db.run(`CREATE TABLE IF NOT EXISTS site_stats (
+    id INTEGER PRIMARY KEY CHECK (id = 1),
+    views INTEGER DEFAULT 0
+)`);
+
+// Initialize stats row if empty
+db.get("SELECT count(*) as count FROM site_stats", (err, row) => {
+    if (row && row.count === 0) {
+        db.run("INSERT INTO site_stats (id, views) VALUES (1, 0)");
+    }
+});
+
 /* 
   ========================================
   API ROUTES
