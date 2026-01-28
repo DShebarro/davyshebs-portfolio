@@ -1,14 +1,18 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <title>Portfólio Profissional - Davy Shebarro</title>
+    <title>DShebarro | Fullstack Developer</title>
 
     <!-- Bibliotecas Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"
+    />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
       rel="stylesheet"
@@ -23,25 +27,80 @@
     <nav
       class="fixed w-full top-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800"
     >
-      <div class="max-w-6xl mx-auto px-6">
-        <div class="flex items-center justify-between h-16">
-          <a
-            href="#home"
-            class="font-bold text-2xl bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent"
+      <div
+        class="w-full px-8 md:px-12 h-20 flex items-center justify-between relative"
+      >
+        <!-- Logo & Name (Left) -->
+        <a href="#home" class="flex items-center gap-3 group">
+          <div
+            class="p-2 bg-blue-500/10 rounded-2xl group-hover:bg-blue-500/20 transition-colors border border-blue-500/20 shadow-lg shadow-blue-500/5 backdrop-blur-sm"
           >
-            DevProfile.
-          </a>
-
-          <!-- Desktop -->
-          <div class="hidden md:flex gap-8">
-            <a href="#sobre" class="nav-link">Sobre</a>
-            <a href="#skills" class="nav-link">Skills</a>
-            <a href="#projetos" class="nav-link">Projetos</a>
-            <a href="#contato" class="nav-link">Contato</a>
+            <img
+              src="./assets/logo-portfolio.png"
+              alt="Logo"
+              class="h-9 w-9 object-contain"
+            />
           </div>
+          <span
+            class="font-bold text-xl md:text-3xl tracking-tight text-white font-display"
+          >
+            D<span class="text-blue-400">Shebarro</span>
+          </span>
+        </a>
 
-          <!-- Mobile -->
-          <button id="mobile-menu-btn" class="md:hidden text-slate-300">
+        <!-- Desktop Navigation (Centered) -->
+        <div
+          class="hidden md:flex items-center gap-8 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+        >
+          <a
+            href="#sobre"
+            class="nav-link text-sm font-medium uppercase tracking-wider"
+            data-i18n="nav-about"
+            >Sobre</a
+          >
+          <a
+            href="#trajetoria"
+            class="nav-link text-sm font-medium uppercase tracking-wider"
+            data-i18n="nav-trajectory"
+            >Trajetória</a
+          >
+          <a
+            href="#habilidades"
+            class="nav-link text-sm font-medium uppercase tracking-wider"
+            data-i18n="nav-skills"
+            >Habilidades</a
+          >
+          <a
+            href="#projetos"
+            class="nav-link text-sm font-medium uppercase tracking-wider"
+            data-i18n="nav-projects"
+            >Projetos</a
+          >
+          <a
+            href="#contato"
+            class="nav-link text-sm font-medium uppercase tracking-wider"
+            data-i18n="nav-contact"
+            >Contato</a
+          >
+        </div>
+
+        <!-- Right Side (Translation & Mobile Menu) -->
+        <div class="flex items-center gap-4">
+          <!-- Translation Button -->
+          <button
+            id="lang-toggle"
+            class="p-2 rounded-lg bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700 transition-all border border-slate-700 flex items-center gap-2"
+            title="Mudar Idioma / Change Language"
+          >
+            <i data-lucide="globe" class="w-4 h-4"></i>
+            <span class="text-xs font-bold" id="lang-label">PT</span>
+          </button>
+
+          <!-- Mobile Menu Button -->
+          <button
+            id="mobile-menu-btn"
+            class="md:hidden text-slate-300 hover:text-white p-2"
+          >
             <i data-lucide="menu"></i>
           </button>
         </div>
@@ -50,57 +109,173 @@
       <!-- MOBILE DROPDOWN -->
       <div
         id="mobile-menu"
-        class="hidden md:hidden bg-slate-900 p-3 border-b border-slate-800"
+        class="hidden md:hidden bg-slate-900 p-4 border-b border-slate-800 space-y-2 absolute w-full top-16 left-0"
       >
-        <a href="#sobre" class="mobile-nav-link">Sobre</a>
-        <a href="#skills" class="mobile-nav-link">Skills</a>
-        <a href="#projetos" class="mobile-nav-link">Projetos</a>
-        <a href="#contato" class="mobile-nav-link">Contato</a>
+        <a
+          href="#sobre"
+          class="mobile-nav-link text-center"
+          data-i18n="nav-about"
+          >Sobre</a
+        >
+        <a
+          href="#trajetoria"
+          class="mobile-nav-link text-center"
+          data-i18n="nav-trajectory"
+          >Trajetória</a
+        >
+        <a
+          href="#habilidades"
+          class="mobile-nav-link text-center"
+          data-i18n="nav-skills"
+          >Habilidades</a
+        >
+        <a
+          href="#projetos"
+          class="mobile-nav-link text-center"
+          data-i18n="nav-projects"
+          >Projetos</a
+        >
+        <a
+          href="#contato"
+          class="mobile-nav-link text-center"
+          data-i18n="nav-contact"
+          >Contato</a
+        >
       </div>
     </nav>
 
     <!-- HERO -->
-    <section id="home" class="pt-32 pb-24 px-6 text-center">
-      <div class="max-w-5xl mx-auto">
-        <span class="tag">Disponível para novos projetos</span>
+    <section
+      id="home"
+      class="pt-32 pb-24 px-6 min-h-[90vh] flex items-center overflow-hidden"
+    >
+      <div
+        class="max-w-[90%] mx-auto flex flex-col md:flex-row items-center gap-12 lg:gap-24"
+      >
+        <!-- Hero Text -->
+        <div class="flex-1 text-center md:text-left">
+          <span class="tag mb-6" data-i18n="hero-tag">Hello World!</span>
 
-        <h1 class="hero-title">
-          Olá, eu sou <br />
-          <span id="profile-name" class="gradient-text"></span>
-        </h1>
+          <h1 class="hero-title leading-tight">
+            <span data-i18n="hero-title-prefix">Olá, eu sou</span> <br />
+            <span id="profile-name" class="gradient-text"></span>
+          </h1>
 
-        <p id="profile-tagline" class="hero-subtitle"></p>
+          <p
+            id="profile-tagline"
+            class="hero-subtitle mb-8 text-lg md:text-xl"
+          ></p>
 
-        <div class="flex flex-col sm:flex-row justify-center gap-4 mt-10">
-          <a href="#contato" class="btn-primary">
-            <i data-lucide="mail"></i> Entrar em Contato
-          </a>
+          <div
+            class="flex flex-col sm:flex-row justify-center md:justify-start gap-4 mt-10"
+          >
+            <a
+              href="#contato"
+              class="btn-primary px-8 py-4"
+              id="btn-contact-hero"
+            >
+              <i data-lucide="mail"></i>
+              <span data-i18n="btn-contact">Entrar em Contato</span>
+            </a>
 
-          <a href="#projetos" class="btn-secondary flex items-center gap-2">
-            Ver Projetos <i data-lucide="chevron-down" class="w-4 h-4"></i>
-          </a>
+            <a
+              href="#projetos"
+              class="btn-secondary px-8 py-4 flex items-center gap-2"
+              id="btn-projects-hero"
+            >
+              <span data-i18n="btn-projects">Ver Projetos</span>
+              <i data-lucide="chevron-down" class="w-4 h-4"></i>
+            </a>
+          </div>
+
+          <!-- Social -->
+          <div class="flex justify-center md:justify-start gap-6 mt-12">
+            <a
+              id="github"
+              target="_blank"
+              class="social hover:text-blue-400 transition-colors"
+              ><i data-lucide="github" class="w-6 h-6"></i
+            ></a>
+            <a
+              id="linkedin"
+              target="_blank"
+              class="social hover:text-blue-400 transition-colors"
+              ><i data-lucide="linkedin" class="w-6 h-6"></i
+            ></a>
+            <a id="mail" class="social hover:text-blue-400 transition-colors"
+              ><i data-lucide="mail" class="w-6 h-6"></i
+            ></a>
+            <a
+              id="instagram"
+              target="_blank"
+              class="social hover:text-blue-400 transition-colors"
+              ><i data-lucide="instagram" class="w-6 h-6"></i
+            ></a>
+          </div>
         </div>
 
-        <!-- Social -->
-        <div class="flex justify-center gap-6 mt-10">
-          <a id="github" target="_blank" class="social"
-            ><i data-lucide="github"></i
-          ></a>
-          <a id="linkedin" target="_blank" class="social"
-            ><i data-lucide="linkedin"></i
-          ></a>
-          <a id="mail" class="social"><i data-lucide="mail"></i></a>
-          <a id="instagram" target="_blank" class="social"
-            ><i data-lucide="instagram"></i
-          ></a>
+        <!-- Hero Image -->
+        <div class="flex-1 flex justify-center items-center relative">
+          <div class="relative group perspective-1000">
+            <!-- Glow background -->
+            <div
+              class="absolute -inset-10 bg-blue-500/20 rounded-full blur-3xl group-hover:bg-blue-500/30 transition duration-1000"
+            ></div>
+
+            <!-- Blob Image -->
+            <div
+              class="relative w-72 h-72 md:w-96 md:h-96 lg:w-[30rem] lg:h-[30rem] overflow-hidden profile-blob border-4 border-slate-800/50 shadow-2xl z-10"
+            >
+              <img
+                id="profile-image"
+                src="./assets/foto-perfil.jpeg"
+                alt="Davy Profile"
+                class="w-full h-full object-cover transform transition duration-100"
+              />
+            </div>
+
+            <!-- Floating Icons -->
+            <!-- Icon 1: Code -->
+            <div
+              class="absolute -top-6 -left-6 md:top-0 md:-left-12 bg-slate-900/90 backdrop-blur-md p-4 rounded-2xl border border-slate-700 shadow-xl animate-float-delayed-1 z-20"
+            >
+              <i data-lucide="code-2" class="w-8 h-8 text-blue-400"></i>
+            </div>
+
+            <!-- Icon 2: Database -->
+            <div
+              class="absolute top-1/2 -right-12 md:-right-16 bg-slate-900/90 backdrop-blur-md p-4 rounded-2xl border border-slate-700 shadow-xl animate-float-delayed-2 z-20"
+            >
+              <i data-lucide="database" class="w-8 h-8 text-cyan-400"></i>
+            </div>
+
+            <!-- Icon 3: Server/Cloud -->
+            <div
+              class="absolute -bottom-8 left-10 md:bottom-0 md:-left-4 bg-slate-900/90 backdrop-blur-md p-4 rounded-2xl border border-slate-700 shadow-xl animate-float-delayed-3 z-20"
+            >
+              <i data-lucide="server" class="w-8 h-8 text-purple-400"></i>
+            </div>
+
+            <!-- Badge -->
+            <div
+              class="absolute -bottom-0 -right-4 md:-bottom-4 md:right-0 bg-slate-900 border border-slate-700 p-4 rounded-2xl shadow-xl flex items-center gap-3 animate-bounce-slow z-30"
+            >
+              <div
+                class="w-3 h-3 bg-green-500 rounded-full animate-pulse"
+              ></div>
+              <span class="text-sm font-medium text-slate-200"
+                >Fullstack Developer</span
+              >
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- SOBRE -->
     <section id="sobre" class="section">
-      <div class="max-w-4xl mx-auto px-6">
-        <h2 class="section-title">Sobre Mim</h2>
+      <div class="max-w-[85%] mx-auto px-6">
+        <h2 class="section-title" data-i18n="section-about">Sobre Mim</h2>
 
         <p
           id="profile-description"
@@ -109,18 +284,58 @@
       </div>
     </section>
 
-    <!-- SKILLS -->
-    <section id="skills" class="section bg-slate-900/50">
-      <div class="max-w-6xl mx-auto px-6">
-        <h2 class="section-title text-center">Minhas Skills</h2>
-        <div id="skills-container" class="grid md:grid-cols-3 gap-8"></div>
+    <!-- TRAJETÓRIA -->
+    <section id="trajetoria" class="section">
+      <div class="max-w-[85%] mx-auto px-6">
+        <h2 class="section-title text-center" data-i18n="section-trajectory">
+          Minha Jornada
+        </h2>
+
+        <div
+          class="relative border-l border-slate-700 ml-4 md:ml-10 space-y-12"
+          id="trajectory-container"
+        >
+          <!-- Items injected by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- HABILIDADES CAROUSEL -->
+    <section id="habilidades" class="section bg-slate-900/50 overflow-hidden">
+      <div class="max-w-[90%] mx-auto px-6 mb-10">
+        <h2
+          class="section-title text-center text-3xl font-bold"
+          data-i18n="section-skills"
+        >
+          Minhas Habilidades
+        </h2>
+      </div>
+
+      <!-- Services Grid -->
+      <div
+        id="services-container"
+        class="max-w-[85%] mx-auto px-6 grid md:grid-cols-3 gap-8 mb-20"
+      >
+        <!-- Injected by JS -->
+      </div>
+
+      <!-- Carousel Container -->
+      <div class="scroller relative z-10 w-full" data-speed="fast">
+        <div
+          id="skills-track"
+          class="scroller__inner flex flex-wrap justify-center gap-8 py-4"
+        >
+          <!-- Icons injected by JS -->
+        </div>
       </div>
     </section>
 
     <!-- PROJETOS -->
     <section id="projetos" class="section">
-      <div class="max-w-6xl mx-auto px-6">
-        <h2 class="section-title text-center">Projetos em Destaque</h2>
+      <div class="max-w-[90%] mx-auto px-6">
+        <h2 class="section-title text-center" data-i18n="section-projects">
+          Projetos em Destaque
+        </h2>
         <div
           id="projects-container"
           class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
@@ -130,66 +345,131 @@
 
     <!-- CONTATO -->
     <section id="contato" class="py-20 bg-slate-900/40">
-      <div class="max-w-4xl mx-auto px-6">
-        <h2 class="text-3xl font-bold text-center mb-10">
-          Deixei sua mensagem
+      <div class="max-w-4xl mx-auto px-6 text-center">
+        <h2 class="section-title mb-12" data-i18n="section-contact">
+          Vamos Conversar?
         </h2>
 
-        <form id="contact-form" class="space-y-6">
-          <!-- Inputs lado a lado -->
-          <div class="grid md:grid-cols-2 gap-6">
-            <input
-              id="name"
-              required
-              placeholder="Seu nome completo"
-              class="w-full px-4 py-3 rounded-lg bg-slate-800/60 border border-slate-700 text-white placeholder-slate-400 focus:ring-2 focus:ring-emerald-500 outline-none"
-            />
-
-            <input
-              id="email"
-              type="email"
-              required
-              placeholder="Seu melhor email"
-              class="w-full px-4 py-3 rounded-lg bg-slate-800/60 border border-slate-700 text-white placeholder-slate-400 focus:ring-2 focus:ring-emerald-500 outline-none"
-            />
-          </div>
-
-          <!-- Área de mensagem -->
-          <textarea
-            id="message"
-            rows="5"
-            required
-            placeholder="Escreva sua mensagem..."
-            class="w-full px-4 py-3 rounded-lg bg-slate-800/60 border border-slate-700 text-white placeholder-slate-400 focus:ring-2 focus:ring-emerald-500 outline-none resize-none"
-          ></textarea>
-
-          <!-- Botão -->
-          <button
-            id="submit-btn"
-            class="w-full py-4 flex items-center justify-center gap-2 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white font-semibold shadow-lg transition-all"
+        <div class="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
+          <!-- Email Card -->
+          <a
+            id="contact-email"
+            href="#"
+            class="group bg-slate-800 p-8 rounded-2xl border border-slate-700 hover:border-blue-500 transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-500/20"
           >
-            <i data-lucide="send"></i> Enviar Mensagem
-          </button>
+            <div
+              class="w-14 h-14 mx-auto bg-slate-900 rounded-full flex items-center justify-center mb-6 border border-slate-700 group-hover:border-blue-500 transition-colors"
+            >
+              <i data-lucide="mail" class="text-blue-400 w-7 h-7"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-2">Email</h3>
+            <p class="text-slate-400 text-sm mb-6">
+              <span data-i18n="contact-email-desc"
+                >Envie uma mensagem detalhada sobre seu projeto ou
+                oportunidade.</span
+              >
+            </p>
+            <span
+              class="text-blue-400 font-medium flex items-center justify-center gap-2"
+            >
+              <span data-i18n="contact-email-btn">Enviar Email</span>
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </span>
+          </a>
 
-          <!-- Mensagem de sucesso -->
-          <p
-            id="success-message"
-            class="hidden text-center text-emerald-400 font-medium pt-2"
+          <!-- WhatsApp Card -->
+          <a
+            id="contact-whatsapp"
+            href="#"
+            target="_blank"
+            class="group bg-slate-800 p-8 rounded-2xl border border-slate-700 hover:border-cyan-400 transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-cyan-400/20"
           >
-            Mensagem enviada com sucesso!
-          </p>
-        </form>
+            <div
+              class="w-14 h-14 mx-auto bg-slate-900 rounded-full flex items-center justify-center mb-6 border border-slate-700 group-hover:border-cyan-400 transition-colors"
+            >
+              <i data-lucide="message-circle" class="text-cyan-400 w-7 h-7"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-2">WhatsApp</h3>
+            <p class="text-slate-400 text-sm mb-6">
+              <span data-i18n="contact-wa-desc"
+                >Vamos bater um papo rápido e tirar suas dúvidas agora
+                mesmo.</span
+              >
+            </p>
+            <span
+              class="text-cyan-400 font-medium flex items-center justify-center gap-2"
+            >
+              <span data-i18n="contact-wa-btn">Iniciar Conversa</span>
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </span>
+          </a>
+        </div>
       </div>
     </section>
 
-    <footer class="footer">
-      <p>
-        &copy; <span id="current-year"></span> DShebarro. Todos os direitos
-        reservados.
-      </p>
+    <footer class="footer bg-slate-950 border-t border-slate-900 py-10">
+      <div
+        class="max-w-[90%] mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6"
+      >
+        <!-- Left: Logo -->
+        <a href="#home" class="flex items-center gap-3">
+          <div class="p-2 bg-blue-500/10 rounded-xl border border-blue-500/20">
+            <img
+              src="./assets/logo-portfolio.png"
+              alt="Logo"
+              class="h-6 w-6 object-contain"
+            />
+          </div>
+          <span class="font-bold text-xl text-white">
+            D<span class="text-blue-400">Shebarro</span>
+          </span>
+        </a>
 
-      <div class="footer-tech">
-        <span>Desenvolvido com HTML, JS & CSS</span>
+        <!-- Center: Copyright -->
+        <p class="text-slate-500 text-sm text-center">
+          &copy; <span id="current-year"></span> DShebarro.
+          <span data-i18n="footer-rights">Todos os direitos reservados.</span>
+        </p>
+
+        <!-- Right: Social Icons -->
+        <div class="flex items-center gap-6">
+          <a
+            id="footer-github"
+            href="#"
+            target="_blank"
+            class="text-slate-400 hover:text-white hover:scale-110 transition-all p-2 bg-slate-900 rounded-full border border-slate-800 hover:border-blue-500 group"
+            title="GitHub"
+          >
+            <i
+              data-lucide="github"
+              class="w-5 h-5 group-hover:text-blue-400 transition-colors"
+            ></i>
+          </a>
+          <a
+            id="footer-linkedin"
+            href="#"
+            target="_blank"
+            class="text-slate-400 hover:text-white hover:scale-110 transition-all p-2 bg-slate-900 rounded-full border border-slate-800 hover:border-blue-500 group"
+            title="LinkedIn"
+          >
+            <i
+              data-lucide="linkedin"
+              class="w-5 h-5 group-hover:text-blue-400 transition-colors"
+            ></i>
+          </a>
+          <a
+            id="footer-instagram"
+            href="#"
+            target="_blank"
+            class="text-slate-400 hover:text-white hover:scale-110 transition-all p-2 bg-slate-900 rounded-full border border-slate-800 hover:border-blue-500 group"
+            title="Instagram"
+          >
+            <i
+              data-lucide="instagram"
+              class="w-5 h-5 group-hover:text-pink-400 transition-colors"
+            ></i>
+          </a>
+        </div>
       </div>
     </footer>
 
