@@ -1,6 +1,7 @@
 // Em DEV: backend local. Em produção troque pela URL do Render.
-const API_BASE_URL = "http://localhost:5000";
-// ex. produção: const API_BASE_URL = "https://seu-backend.onrender.com";
+// let currentLang = localStorage.getItem("portfolio-lang") || "pt";
+
+let currentLang = localStorage.getItem("portfolio-lang") || "pt";
 
 document.addEventListener("DOMContentLoaded", () => {
   // Inicializa os ícones do Lucide
@@ -8,175 +9,307 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* 
     ========================================
-    1. GENERAL UI UPDATES
+    1. GENERAL UI UPDATES & TRANSLATIONS
     ========================================
   */
-  
-  // Update Current Year in Footer
-  document.getElementById("current-year").textContent = new Date().getFullYear();
+  document.getElementById("current-year").textContent =
+    new Date().getFullYear();
 
-  /* 
-    ========================================
-    2. PROFILE DATA INJECTION
-    ========================================
-  */
-  document.getElementById("profile-name").textContent = profile.name;
-  document.getElementById("profile-tagline").textContent = `${profile.role}. ${profile.tagline}`;
-  document.getElementById("profile-description").textContent = profile.description;
-
-  // Social Links
+  // Social Links (Universal)
+  // Social Links (Universal)
   document.getElementById("github").href = profile.social.github;
   document.getElementById("linkedin").href = profile.social.linkedin;
   document.getElementById("mail").href = profile.social.email;
   document.getElementById("instagram").href = profile.social.instagram;
 
+  // Footer Social
+  document.getElementById("footer-github").href = profile.social.github;
+  document.getElementById("footer-linkedin").href = profile.social.linkedin;
+  document.getElementById("footer-instagram").href = profile.social.instagram;
+
+  // Initial Content Load
+  updateLanguage(currentLang);
+
+  // Language Toggle Logic
+  const langToggle = document.getElementById("lang-toggle");
+  if (langToggle) {
+    langToggle.addEventListener("click", () => {
+      currentLang = currentLang === "pt" ? "en" : "pt";
+      updateLanguage(currentLang);
+    });
+  }
+
   /* 
     ========================================
-    3. SKILLS RENDERING
+    2. HERO IMAGE INTERACTION (PARALLAX)
     ========================================
   */
-  function renderSkills() {
-    const container = document.getElementById("skills-container");
+  const heroSection = document.getElementById("home");
+  const profileImageContainer = document.querySelector(".perspective-1000"); // Container handling perspective
+  const profileImage = document.getElementById("profile-image");
 
-    container.innerHTML = skills
-      .map(
-        (s) => `
-          <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 hover:border-emerald-400 transition">
-            <div class="flex items-center gap-3 text-emerald-400 mb-4">
-              <i data-lucide="${s.icon}"></i>
-              <h3 class="text-xl font-semibold">${s.category}</h3>
+  if (heroSection && profileImageContainer && profileImage) {
+    heroSection.addEventListener("mousemove", (e) => {
+      const { offsetWidth: width, offsetHeight: height } = heroSection;
+      const { clientX: x, clientY: y } = e;
+
+      // Calculate center relative coordinates
+      const xPos = (x / width - 0.5) * 20; // Max rotation deg X
+      const yPos = (y / height - 0.5) * 20; // Max rotation deg Y
+
+      // Apply transformation
+      // Note: RotateX affects Y axis visually, RotateY affects X axis visually
+      profileImage.style.transform = `perspective(1000px) rotateY(${xPos}deg) rotateX(${-yPos}deg) scale(1.05)`;
+    });
+
+    heroSection.addEventListener("mouseleave", () => {
+      // Reset position
+      profileImage.style.transform =
+        "perspective(1000px) rotateY(0deg) rotateX(0deg) scale(1)";
+    });
+  }
+});
+
+/* 
+  ========================================
+  CORE FUNCTIONS
+  ========================================
+*/
+
+function updateLanguage(lang) {
+  // Save preference
+  localStorage.setItem("portfolio-lang", lang);
+
+  // Update Lang Button Label
+  const langLabel = document.getElementById("lang-label");
+  if (langLabel) langLabel.textContent = lang.toUpperCase();
+
+  // 1. Update Static UI Elements (data-i18n)
+  const translations = uiTranslations[lang];
+  document.querySelectorAll("[data-i18n]").forEach((el) => {
+    const key = el.getAttribute("data-i18n");
+    if (translations[key]) {
+      el.textContent = translations[key];
+    }
+  });
+
+  // 2. Update Profile Dynamic Info
+  document.getElementById("profile-name").textContent = profile.name;
+  document.getElementById("profile-tagline").textContent = `${
+    profile[lang].role
+  }. ${profile[lang].tagline}`;
+  document.getElementById("profile-description").textContent =
+    profile[lang].description;
+
+  // 3. Re-render Projects (Language dependent)
+  renderProjects(lang);
+
+  // 4. Render Trajectory (Language dependent)
+  renderTrajectory(lang);
+
+  // 5. Render Skills
+  renderSkills();
+
+  // 6. Render Services
+  renderServices(lang);
+
+  // Re-init generic icons just in case
+  lucide.createIcons();
+}
+
+function renderTrajectory(lang) {
+  const container = document.getElementById("trajectory-container");
+  if (!container) return;
+
+  container.innerHTML = trajectory
+    .map(
+      (item) => `
+          <div class="relative pl-8 md:pl-16 group">
+              <!-- Icon Marker -->
+              <div
+              class="absolute -left-5 top-0 w-10 h-10 rounded-full bg-slate-900 border-2 border-slate-700 group-hover:border-blue-500 group-hover:scale-110 transition-all duration-300 flex items-center justify-center shadow-lg group-hover:shadow-blue-500/30 z-10"
+              >
+                <i data-lucide="${item.icon}" class="w-5 h-5 text-slate-400 group-hover:text-blue-400 transition-colors"></i>
+              </div>
+  
+              <!-- Content -->
+              <div
+              class="flex flex-col sm:flex-row gap-2 sm:items-center mb-2 animate-fadeIn"
+              >
+              <h3 class="text-xl font-bold text-white group-hover:text-blue-400 transition-colors">
+                  ${item[lang].title}
+              </h3>
+              <span class="text-sm font-semibold text-blue-400 bg-blue-500/10 px-3 py-1 rounded-full border border-blue-500/20">
+                  ${item.year}
+              </span>
+              </div>
+  
+              <p class="text-slate-400 leading-relaxed max-w-3xl">
+              ${item[lang].desc}
+              </p>
+          </div>
+      `,
+    )
+    .join("");
+
+  // Refresh icons because we just added new ones to the DOM
+  lucide.createIcons();
+}
+
+function renderSkills() {
+  const track = document.getElementById("skills-track");
+  if (!track) return;
+
+  const iconMap = {
+    HTML: "devicon-html5-plain",
+    CSS: "devicon-css3-plain",
+    JavaScript: "devicon-javascript-plain",
+    React: "devicon-react-original",
+    TypeScript: "devicon-typescript-plain",
+    Tailwind: "devicon-tailwindcss-original",
+    "Node.js": "devicon-nodejs-plain",
+    PHP: "devicon-php-plain",
+    Python: "devicon-python-plain",
+    PostgreSQL: "devicon-postgresql-plain",
+    "Git/GitHub": "devicon-git-plain",
+    Figma: "devicon-figma-plain",
+    WordPress: "devicon-wordpress-plain",
+  };
+
+  const allSkills = skills.flatMap((s) => s.items);
+  const uniqueSkills = [...new Set(allSkills)];
+
+  const generateCards = () => {
+    return uniqueSkills
+      .map((skill) => {
+        const iconClass = iconMap[skill] || "devicon-devicon-plain";
+        return `
+            <div class="skill-card">
+                <i class="${iconClass}"></i>
+                <span class="text-slate-300 font-medium">${skill}</span>
             </div>
+        `;
+      })
+      .join("");
+  };
 
-            <div class="flex flex-wrap gap-2">
-              ${s.items
+  track.innerHTML = generateCards();
+  addAnimation();
+}
+
+function addAnimation() {
+  const scrollers = document.querySelectorAll(".scroller");
+  scrollers.forEach((scroller) => {
+    if (scroller.getAttribute("data-animated")) return;
+    scroller.setAttribute("data-animated", "true");
+
+    const scrollerInner = scroller.querySelector(".scroller__inner");
+    const scrollerContent = Array.from(scrollerInner.children);
+
+    scrollerContent.forEach((item) => {
+      const duplicatedItem = item.cloneNode(true);
+      duplicatedItem.setAttribute("aria-hidden", "true");
+      scrollerInner.appendChild(duplicatedItem);
+    });
+  });
+}
+
+function renderProjects(lang) {
+  const container = document.getElementById("projects-container");
+  if (!container) return;
+
+  container.innerHTML = projects
+    .map(
+      (p) => `
+        <div class="bg-slate-800 rounded-xl border border-slate-700 overflow-hidden hover:border-blue-400 transition group h-full flex flex-col">
+          <div class="overflow-hidden h-48">
+              <img src="${
+                p.image
+              }" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+          </div>
+
+          <div class="p-6 flex flex-col flex-grow">
+            <h3 class="text-xl font-bold text-white">${p.title}</h3>
+            <p class="text-slate-400 text-sm mt-2 flex-grow">${p[lang].desc}</p>
+
+            <div class="flex flex-wrap gap-2 mt-4 mb-6">
+              ${p.techs
                 .map(
-                  (item) =>
-                    `<span class="px-3 py-1 bg-slate-900 border border-slate-700 rounded-full text-sm">${item}</span>`
+                  (t) =>
+                    `<span class="text-xs px-2 py-1 bg-blue-900/30 text-blue-400 rounded border border-blue-900/50">${t}</span>`,
                 )
                 .join("")}
             </div>
-          </div>
-        `
-      )
-      .join("");
 
-    lucide.createIcons(); // Re-render icons for new content
-  }
-
-  renderSkills();
-
-  /* 
-    ========================================
-    4. PROJECTS RENDERING
-    ========================================
-  */
-  function renderProjects() {
-    const container = document.getElementById("projects-container");
-
-    container.innerHTML = projects
-      .map(
-        (p) => `
-          <div class="bg-slate-800 rounded-xl border border-slate-700 overflow-hidden hover:border-emerald-400 transition">
-            <img src="${p.image}" class="w-full h-48 object-cover">
-
-            <div class="p-6">
-              <h3 class="text-xl font-bold">${p.title}</h3>
-              <p class="text-slate-400 text-sm mt-2">${p.desc}</p>
-
-              <div class="flex flex-wrap gap-2 mt-4">
-                ${p.techs
-                  .map(
-                    (t) =>
-                      `<span class="text-xs px-2 py-1 bg-emerald-900/30 text-emerald-400 rounded">${t}</span>`
-                  )
-                  .join("")}
-              </div>
-
-              <div class="flex gap-4 mt-4">
-                <a href="${p.liveLink}" class="text-slate-300 hover:text-white">Demo</a>
-                <a href="${p.repoLink}" class="text-slate-300 hover:text-white">Código</a>
-              </div>
+            <div class="flex gap-4 mt-auto">
+              <a href="${
+                p.liveLink
+              }" class="flex items-center gap-1 text-slate-300 hover:text-blue-400 transition"><i data-lucide="external-link" class="w-4 h-4"></i> Demo</a>
+              <a href="${
+                p.repoLink
+              }" class="flex items-center gap-1 text-slate-300 hover:text-blue-400 transition"><i data-lucide="github" class="w-4 h-4"></i> Código</a>
             </div>
           </div>
-        `
-      )
-      .join("");
+        </div>
+      `,
+    )
+    .join("");
+}
 
-    lucide.createIcons(); // Re-render icons for new content
-  }
+function renderServices(lang) {
+  const container = document.getElementById("services-container");
+  if (!container) return;
 
-  renderProjects();
+  container.innerHTML = services
+    .map(
+      (s) => `
+        <div class="service-card group">
+          <div class="service-icon-box">
+            <i data-lucide="${s.icon}" class="w-8 h-8 text-blue-400 group-hover:text-blue-500 transition-colors"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors">
+            ${s[lang].title}
+          </h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            ${s[lang].desc}
+          </p>
+        </div>
+      `,
+    )
+    .join("");
+}
 
-  /* 
-    ========================================
-    5. MOBILE MENU BEHAVIOR
-    ========================================
-  */
-  const mobileMenuBtn = document.getElementById("mobile-menu-btn");
-  const mobileMenu = document.getElementById("mobile-menu");
+/* 
+  ========================================
+  MOBILE MENU & CONTACT
+  ========================================
+*/
+const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+const mobileMenu = document.getElementById("mobile-menu");
 
+if (mobileMenuBtn && mobileMenu) {
   mobileMenuBtn.addEventListener("click", () => {
     mobileMenu.classList.toggle("hidden");
-    
-    // Toggle icon between 'menu' and 'x'
     mobileMenuBtn.innerHTML = mobileMenu.classList.contains("hidden")
       ? '<i data-lucide="menu"></i>'
       : '<i data-lucide="x"></i>';
-
     lucide.createIcons();
   });
+}
 
-  /* 
-    ========================================
-    6. CONTACT FORM & BACKEND INTEGRATION
-    ========================================
-  */
-  const form = document.getElementById("contact-form");
-  const success = document.getElementById("success-message");
-  const submitBtn = document.getElementById("submit-btn");
+// Contact Actions
+const emailBtn = document.getElementById("contact-email");
+const whatsappBtn = document.getElementById("contact-whatsapp");
 
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
+if (emailBtn && profile.social.email) {
+  emailBtn.href = `mailto:${profile.social.email}`;
+}
 
-    const name = document.getElementById("name").value;
-    const email = document.getElementById("email").value;
-    const message = document.getElementById("message").value;
-
-    // Disable button and show loading state
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = '<i data-lucide="loader"></i> Enviando...';
-    lucide.createIcons();
-
-    try {
-      const response = await fetch(`${API_BASE_URL}/api/messages`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name, email, message }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        success.classList.remove("hidden");
-        form.reset();
-        
-        console.log("Mensagem salva:", data);
-        
-        // Hide success message after 3 seconds
-        setTimeout(() => success.classList.add("hidden"), 3000);
-      } else {
-        alert(data.error || "Erro ao enviar mensagem.");
-      }
-    } catch (error) {
-      console.error("Erro:", error);
-      alert("Erro de conexão com o servidor. Verifique se o backend está rodando.");
-    } finally {
-      // Restore button state
-      submitBtn.disabled = false;
-      submitBtn.innerHTML = '<i data-lucide="send"></i> Enviar Mensagem';
-      lucide.createIcons();
-    }
-  });
-});
+if (whatsappBtn && profile.social.phone) {
+  if (profile.social.phone.startsWith("http")) {
+    whatsappBtn.href = profile.social.phone;
+  } else {
+    const phoneClean = profile.social.phone.replace(/\D/g, "");
+    whatsappBtn.href = `https://wa.me/${phoneClean}?text=Olá!%20Vi%20seu%20portfólio%20e%20gostaria%20de%20conversar.`;
+  }
+}
