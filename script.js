@@ -28,6 +28,8 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("footer-instagram").href = profile.social.instagram;
 
   // Initial Content Load
+  // Initial Content Load
+  renderSkills();
   updateLanguage(currentLang);
 
   // Language Toggle Logic
@@ -108,7 +110,8 @@ function updateLanguage(lang) {
   renderTrajectory(lang);
 
   // 5. Render Skills
-  renderSkills();
+  // 5. Render Skills (Moved to Init)
+  // renderSkills();
 
   // 6. Render Services
   renderServices(lang);
