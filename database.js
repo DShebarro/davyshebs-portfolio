@@ -20,13 +20,13 @@ const profile = {
     role: "Desenvolvedor Fullstack",
     tagline: "Transformando ideias em experiências digitais.",
     description:
-      "Sou desenvolvedor fullstack em constante evolução, movido pela curiosidade e pela vontade de construir soluções que gerem impacto real. Minha jornada envolve engenharia de software, desenvolvimento web, bancos de dados, automação e fundamentos de machine learning e DevOps. Aprendo colocando a mão na massa, explorando como as coisas funcionam por trás do código. Atualmente, estudo Engenharia de Software na ANHANGUERA FACULDADE.",
+      "Sou desenvolvedor fullstack em constante evolução, com experiência em desenvolvimento frontend e backend utilizando JavaScript, TypeScript, React, Next.js e Node.js, além de integração com bancos de dados relacionais. Minha jornada envolve engenharia de software, automação e fundamentos de machine learning e DevOps. Aprendo colocando a mão na massa, buscando entender profundamente como as aplicações funcionam por trás do código. Atualmente, estudo Engenharia de Software na Faculdade Anhanguera.",
   },
   en: {
     role: "Fullstack Developer",
     tagline: "Transforming ideas into digital experiences.",
     description:
-      "I am a full stack developer in constant evolution, driven by curiosity and the desire to build solutions that create real impact. My journey involves software engineering, web development, databases, automation, and fundamentals of machine learning and DevOps. I learn by getting hands-on and exploring how things work behind the code. Currently, I study Software Engineering at ANHANGUERA University.",
+      "I am a full stack developer in constant evolution, with experience in frontend and backend development using JavaScript, TypeScript, React, Next.js, and Node.js, as well as integration with relational databases. My journey involves software engineering, automation, and fundamentals of machine learning and DevOps. I learn by getting hands-on and seeking a deep understanding of how applications work behind the code. Currently, I study Software Engineering at Anhanguera University.",
   },
 };
 
