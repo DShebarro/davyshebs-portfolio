@@ -6,7 +6,7 @@
   It contains objects for Profile, Skills, Projects, and Trajectory.
 */
 
-const profile = {
+export const profile = {
   name: "Davy Shebarro",
   social: {
     github: "https://github.com/DShebarro",
@@ -30,7 +30,7 @@ const profile = {
   },
 };
 
-const trajectory = [
+export const trajectory = [
   {
     year: "2023",
     icon: "code",
@@ -81,7 +81,7 @@ const trajectory = [
   },
 ];
 
-const skills = [
+export const skills = [
   {
     category: "Frontend",
     icon: "code-2",
@@ -99,49 +99,49 @@ const skills = [
   },
 ];
 
-const projects = [
+export const projects = [
   {
     title: "Pesquisa Inteligente com IA",
     image: "./assets/busca-inteligente-IA.png",
     techs: ["JavaScript(ES6+)", "HTML5", "CSS", "Tailwind CSS", "Gemini API"],
-    liveLink: "#",
-    repoLink: "#",
+    liveLink: "https://seu-link-de-demo-aqui.com", // Substitua pelo link real
+    repoLink: "https://github.com/DShebarro/seu-repo-aqui", // Substitua pelo repositório real
     pt: {
-      desc: "Aplicação Single Page (SPA) - Pesquisa em tempo real com IA e Busca de Dado com API.",
+      desc: "Desenvolvimento de uma SPA que integra a API do Gemini. A solução resolve o problema de buscas engessadas oferecendo resultados semânticos em tempo real, elevando a experiência do usuário.",
     },
     en: {
-      desc: "Single Page Application (SPA) - Real-time AI search and Data Fetching via API.",
+      desc: "Development of a SPA integrating the Gemini API. The solution solves rigid search problems by offering real-time semantic results, significantly improving user experience.",
     },
   },
   {
     title: "Gerenciador de Links",
     image: "./assets/gerenciador-de-link.png",
     techs: ["EXPO", "React Native", "TypeScript"],
-    liveLink: "#",
-    repoLink: "#",
+    liveLink: "https://seu-link-de-demo-aqui.com", // Substitua pelo link real
+    repoLink: "https://github.com/DShebarro/seu-repo-aqui", // Substitua pelo repositório real
     pt: {
-      desc: "Aplicação de gerenciamento de links úteis, permitindo organizar e acessar recursos rapidamente.",
+      desc: "Aplicativo móvel criado para centralizar acessos e recursos. Elimina a perda de tempo na busca de informações pulverizadas, otimizando a produtividade diária da equipe de forma escalável.",
     },
     en: {
-      desc: "Useful links management application allowing quick organization and access to resources.",
+      desc: "Mobile app built to centralize accesses and resources. Eliminates time wasted searching for scattered information, optimizing the team's daily productivity in a scalable way.",
     },
   },
   {
     title: "Cadastro de Produtos - Automação",
     image: "./assets/cadastro-de-produtos-automacao.png",
     techs: ["Python", "Pandas", "PyAutoGui"],
-    liveLink: "#",
-    repoLink: "#",
+    liveLink: "https://seu-link-de-demo-aqui.com", // Substitua pelo link real
+    repoLink: "https://github.com/DShebarro/seu-repo-aqui", // Substitua pelo repositório real
     pt: {
-      desc: "Script de automação para cadastro de produtos em massa, economizando tempo e reduzindo erros.",
+      desc: "Script robusto em Python focado em dados empresariais. A solução automatiza tarefas repetitivas, reduzindo o tempo de cadastro em mais de 80% e eliminando falhas humanas na digitação em massa.",
     },
     en: {
-      desc: "Automation script for bulk product registration, saving time and reducing errors.",
+      desc: "Robust Python script focused on business data. The solution automates repetitive tasks, reducing registration time by over 80% and eliminating human errors in bulk data entry.",
     },
   },
 ];
 
-const services = [
+export const services = [
   {
     icon: "layout",
     pt: {
@@ -178,10 +178,11 @@ const services = [
 ];
 
 // UI Translations
-const uiTranslations = {
+export const uiTranslations = {
   pt: {
     "nav-about": "Sobre",
-    "nav-trajectory": "Trajetória", // New
+    "nav-trajectory": "Trajetória",
+    "nav-services": "Serviços",
     "nav-skills": "Habilidades",
     "nav-projects": "Projetos",
     "nav-contact": "Contato",
@@ -191,8 +192,9 @@ const uiTranslations = {
     "btn-contact": "Entrar em Contato",
     "btn-projects": "Ver Projetos",
     "section-about": "Sobre Mim",
-    "section-trajectory": "Minha Jornada", // New
-    "section-skills": "Minhas Habilidades",
+    "section-trajectory": "Minha Jornada",
+    "section-services": "Meus Serviços",
+    "section-skills": "Ferramentas & Tecnologias",
     "section-projects": "Projetos em Destaque",
     "section-contact": "Vamos Conversar?",
     "contact-email-title": "Email",
@@ -207,7 +209,8 @@ const uiTranslations = {
   },
   en: {
     "nav-about": "About",
-    "nav-trajectory": "Trajectory", // New
+    "nav-trajectory": "Trajectory",
+    "nav-services": "Services",
     "nav-skills": "Skills",
     "nav-projects": "Projects",
     "nav-contact": "Contact",
@@ -217,8 +220,9 @@ const uiTranslations = {
     "btn-contact": "Get in Touch",
     "btn-projects": "View Projects",
     "section-about": "About Me",
-    "section-trajectory": "My Journey", // New
-    "section-skills": "My Skills",
+    "section-trajectory": "My Journey",
+    "section-services": "My Services",
+    "section-skills": "Tools & Technologies",
     "section-projects": "Featured Projects",
     "section-contact": "Let's Talk?",
     "contact-email-title": "Email",
