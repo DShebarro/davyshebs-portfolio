@@ -104,8 +104,8 @@ export const projects = [
     title: "Pesquisa Inteligente com IA",
     image: "./assets/busca-inteligente-IA.png",
     techs: ["JavaScript(ES6+)", "HTML5", "CSS", "Tailwind CSS", "Gemini API"],
-    liveLink: "https://seu-link-de-demo-aqui.com", // Substitua pelo link real
-    repoLink: "https://github.com/DShebarro/seu-repo-aqui", // Substitua pelo repositório real
+    liveLink: "https://buscar-intlg-ia.vercel.app/", // Substitua pelo link real
+    repoLink: "https://github.com/dev-dshebarro/buscar_intlg_IA", // Substitua pelo repositório real
     pt: {
       desc: "Desenvolvimento de uma SPA que integra a API do Gemini. A solução resolve o problema de buscas engessadas oferecendo resultados semânticos em tempo real, elevando a experiência do usuário.",
     },
